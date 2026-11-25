@@ -1,0 +1,115 @@
+# Налаштування адмінки Pensieve (Decap CMS).
+# Сайт: https://pensieve.com.ua · репозиторій на GitHub: pensieve-shop/pensieve-site
+backend:
+  name: github
+  repo: pensieve-shop/pensieve-site
+  branch: main
+
+locale: uk
+media_folder: photos
+public_folder: photos
+
+collections:
+  - name: site
+    label: Сайт
+    editor: {preview: false}
+    files:
+      - name: content
+        label: Товари, фото, відгуки, контакти
+        file: content/site.json
+        fields:
+          - label: Контакти
+            name: contacts
+            widget: object
+            fields:
+              - {label: "Telegram (без @)", name: telegram, widget: string}
+              - {label: "Instagram (без @)", name: instagram, widget: string}
+              - {label: "TikTok (без @ або повне посилання)", name: tiktok, widget: string, required: false}
+
+          - label: "Головний кулон угорі сторінки (порожньо — намальовані фото)"
+            name: hero
+            widget: object
+            required: false
+            fields:
+              - {label: "Фото 1 — права половинка", name: photo1, widget: image, required: false}
+              - {label: "Фото 2 — ліва половинка", name: photo2, widget: image, required: false}
+
+          - label: Товари (колекція)
+            name: products
+            widget: list
+            summary: "{{fields.title}} — {{fields.price}}"
+            fields:
+              - label: Вид виробу
+                name: type
+                widget: select
+                default: locket
+                options:
+                  - {label: "Товар із фото (фото гортаються натисканням)", value: item}
+                  - {label: "Намальований кулон, що відкривається", value: locket}
+                  - {label: "Міні-альбом (гортається)", value: book}
+                  - {label: "Брелок (перевертається)", value: key}
+              - {label: Назва, name: title, widget: string}
+              - {label: "Артикул", name: sku, widget: string, required: false}
+              - {label: "Розмір (наприклад: 2,6×2,8 см — висота×ширина)", name: size, widget: string, required: false}
+              - {label: "Розділ каталогу", name: cat, widget: select, required: false, options: [{label: "Серця", value: heart}, {label: "Круглі та овальні", value: round}, {label: "Книжка і квадрат", value: book}, {label: "Міні-альбоми", value: album}, {label: "Брелоки", value: key}]}
+              - {label: "Позначка на фото (хіт, скоро, лише 1 фото…)", name: badge, widget: string, required: false}
+              - label: "Кольори (кружечки, що перемикають фото)"
+                name: colors
+                widget: list
+                required: false
+                fields:
+                  - {label: "Назва кольору", name: name, widget: string}
+                  - {label: "Колір кружечка", name: hex, widget: color}
+                  - {label: "Номер фото (з 0)", name: i, widget: number, value_type: int}
+              - {label: "Гортати фото автоматично", name: auto, widget: boolean, required: false, default: false}
+              - {label: "Тон фото", name: tone, widget: select, required: false, options: [{label: "Срібний (чорно-біле)", value: silver}, {label: "Срібний світліший (для фото на сірому фоні)", value: silver-lift}]}
+              - {label: "Анімація зміни фото", name: anim, widget: select, required: false, options: [{label: "Як сторінка книжки", value: flip}]}
+              - {label: "Фото товару (перше — закритий, друге — відкритий)", name: photos, widget: list, required: false, field: {label: Фото, name: photo, widget: image}}
+              - {label: "Ціна (наприклад: 650 грн)", name: price, widget: string, required: false}
+              - {label: Опис, name: text, widget: text}
+              - {label: "Мітки під описом", name: tags, widget: list, required: false}
+              - label: "Форма кулона (лише для кулона)"
+                name: shape
+                widget: select
+                required: false
+                default: heart
+                options:
+                  - {label: Серце, value: heart}
+                  - {label: Коло, value: circle}
+                  - {label: Овал, value: oval}
+                  - {label: Книжка, value: book}
+                  - {label: Квадрат, value: square}
+              - {label: "Фото 1 — права половинка кулона / фото брелока", name: photo1, widget: image, required: false}
+              - {label: "Фото 2 — ліва половинка кулона", name: photo2, widget: image, required: false}
+              - {label: "Фото міні-альбому (по черзі, від обкладинки)", name: albumPhotos, widget: list, required: false, field: {label: Фото, name: photo, widget: image}}
+              - {label: "Текст на звороті брелока", name: memeText, widget: string, required: false}
+
+          - label: Галерея «Наживо»
+            name: gallery
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - {label: Фото, name: photo, widget: image}
+              - {label: Підпис, name: title, widget: string}
+              - {label: "Дрібний підпис", name: caption, widget: string, required: false}
+
+          - {label: "Показувати примітку «демо-відгуки»", name: demoReviews, widget: boolean, default: false}
+
+          - label: Відгуки
+            name: reviews
+            widget: list
+            summary: "{{fields.name}}"
+            fields:
+              - {label: "Ім'я (можна лишити порожнім)", name: name, widget: string, required: false}
+              - {label: "Дата (наприклад: 9 вересня)", name: date, widget: string, required: false}
+              - {label: "Звідки", name: src, widget: select, required: false, options: ["Instagram", "Telegram"]}
+              - {label: Повідомлення клієнтки, name: messages, widget: list, field: {label: Повідомлення, name: m, widget: text}}
+              - {label: Ваша відповідь, name: reply, widget: string, required: false}
+
+          - label: Догляд
+            name: care
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - {label: Заголовок, name: title, widget: string}
+              - {label: Текст, name: text, widget: text}
