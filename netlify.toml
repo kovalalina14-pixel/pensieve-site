@@ -1,0 +1,8 @@
+[build]
+  publish = "."
+
+# Адмінка не потрібна в пошуку Google
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

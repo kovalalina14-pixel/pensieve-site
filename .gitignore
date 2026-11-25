@@ -1,0 +1,11 @@
+# Приватні файли власниці та робочі матеріали — не публікуються
+*.pdf
+use/
+website_ready_jewelry_photos/
+photos/cut/
+photos/cutk/
+photos/IMG_*
+photos/2026-*
+.claude/
+.netlify/
+.DS_Store
